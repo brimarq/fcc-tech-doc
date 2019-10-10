@@ -1,0 +1,14 @@
+@use postcss-simple-vars;
+@use postcss-nested;
+
+$primary-font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
+
+/* #fcc_test_suite_wrapper {
+  display: none;
+} */
+
+html, body { height: 100%; }
+
+body {
+  font-family: $primary-font-family;
+}
