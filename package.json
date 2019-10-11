@@ -51,5 +51,8 @@
     "> 1%",
     "maintained node versions",
     "not dead"
-  ]
+  ],
+  "dependencies": {
+    "postcss-nested-ancestors": "^2.0.0"
+  }
 }
