@@ -61,7 +61,7 @@ module.exports = {
     new MiniHtmlWebpackPlugin({
       context: {
         lang: 'en',
-        title: 'devServer Demo',
+        title: 'Technical Documentation Page | fCC Responsive Web Design Projects',
         container: 'root',
         // head: {
         //   scripts: [
