@@ -1,16 +1,20 @@
+import Prism from 'prismjs';
+import 'normalize.css/normalize.css';
+import 'prismjs/plugins/diff-highlight/prism-diff-highlight.css';
+import 'prismjs/plugins/diff-highlight/prism-diff-highlight.js';
+
 import './style.css';
 import './script.js';
 
-const root = document.getElementById('root');
 
-const getIndexHtml = () => require('./index.pug')();
-const injectHtml = (element, html) => element.innerHTML = html;
+// Inject compiled index.pug content as HTML
+(() => {
+  const root = document.getElementById('root');
+  return root.innerHTML = require('./index.pug')();
+})();
 
-injectHtml(root, getIndexHtml());
+if (Prism) Prism.highlightAll();
 
 if (module.hot) {
-  module.hot.accept('./index.pug', function() {
-    console.log('PAGE CONTENT CHANGED');
-    return injectHtml(root, getIndexHtml());
-  });
+  module.hot.accept(err => console.log(err));
 }
