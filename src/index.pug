@@ -1,8 +1,8 @@
-- var topics = ["Section 1 Topic", "Section 2 Topic", "Section 3 Topic", "Section 4 Topic", "Section 5 Topic"];
+- var topics = ["Introduction", "Initial Setup", "JS Loader", "Pug Loader", "CSS Loader"];
 
 mixin nav-list(topics)
   ul.nav-list: each topic in topics
-    li.nav-list-item: span: a.nav-link(href=`#${topic.split(" ").join("_").toLowerCase()}` onclick='document.querySelector("input#hamburger-toggle").checked = false;') #{topic}
+    li.nav-list-item: a.nav-link(href=`#${topic.split(" ").join("_").toLowerCase()}`) #{topic}
 
 mixin main-section(topic)
   section.main-section(id=`${topic.split(" ").join("_").toLowerCase()}`)
@@ -30,36 +30,288 @@ mixin main-section(topic)
 
   main#main-doc
     +main-section(`${topics[0]}`)
-      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec nibh lectus. Proin semper elementum velit id pretium. Vestibulum viverra pellentesque hendrerit. Vestibulum vestibulum ornare sapien eget iaculis. Mauris suscipit pellentesque dolor, vel consequat nisl bibendum in. Integer varius neque ut elit ultricies porta. Curabitur ligula risus, auctor eget fermentum a, pellentesque vel elit. Nulla porttitor lacus consectetur mi maximus, vitae vulputate augue blandit. Nullam dapibus luctus odio, ac malesuada tortor mollis nec.
-      p Aenean dictum elit nec suscipit consequat. Vestibulum quis efficitur nisl. Duis quis velit sed urna tempor porttitor. Aliquam quis faucibus ipsum, sed faucibus quam. Quisque sollicitudin metus at molestie tempor. Fusce sed ante dolor. Phasellus non semper est. Ut suscipit vehicula nisi, non pretium justo blandit facilisis. Etiam dictum pretium sapien ac semper. Ut blandit odio sit amet nisl vulputate varius. Donec efficitur nisi ac fermentum egestas. Phasellus in laoreet ex, sit amet dictum nibh.
-       
-      pre: code console.log("Hello, world!");
-
+      p Have you ever been working in a <a href="https://codepen.io/"> CodePen.io</a> pen and wished there was a way to work locally, in your own IDE, with the advantage of version control? This guide will show how to mimic a CodePen pen on your own computer using <a href="https://webpack.js.org/">Webpack</a> with its dev server and hot reloading. Of course, you'll still have to copy & paste your finished code into Codepen; but, this way, you can version your code in a git repository as you work.  
+      p Here, we will simulate a pen with this configuration: 
       ul
-        li Integer consequat risus quis nisl porta fringilla.
-        li Sed luctus quam eget orci tempus gravida.
+        li Pug
+        li PostCSS
+        li JS + Babel
+        li Normalize
+        li Autoprefixer 
+
+      p NOTE: We will be setting up a basic Webpack configuration, but all of the nitty-gritty, dirty details of doing so is beyond the scope of this guide.
+      
 
     +main-section(`${topics[1]}`)
-      p Aenean laoreet eros eu metus eleifend egestas in sed tellus. Nulla sapien metus, tristique a rhoncus non, commodo vitae ante. Quisque vestibulum eros a consectetur fermentum. Curabitur vitae venenatis ipsum. Sed condimentum purus ac orci tincidunt feugiat. Praesent tincidunt luctus ipsum, non luctus leo fringilla condimentum. Donec feugiat, sapien ut malesuada vehicula, risus massa dictum ipsum, sit amet dapibus mauris leo ultrices enim. Curabitur tempus condimentum pharetra. Phasellus non arcu viverra, dictum purus a, posuere nulla. Proin felis elit, vehicula vitae neque eget, egestas suscipit sem. Praesent rutrum orci tellus, vel molestie mauris viverra in. Proin non elit risus. Vivamus et neque in mauris hendrerit convallis.
-      p Nam gravida tempus erat vitae venenatis. Vivamus pulvinar fermentum vulputate. Suspendisse consequat tincidunt dui in cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque malesuada enim enim, sed molestie erat convallis ac. Donec non orci nibh. Vestibulum quis sagittis orci. Mauris vehicula neque eu velit accumsan consectetur. Fusce ac urna a eros mattis porttitor. Donec bibendum placerat metus, vitae suscipit est faucibus sit amet. Maecenas mattis sollicitudin lectus fermentum mollis. Vestibulum auctor ex leo, sit amet lacinia magna molestie ac. Maecenas vel lorem efficitur, vestibulum mauris nec, consectetur urna. Sed tincidunt et lorem a placerat. Etiam tempor lorem et tincidunt efficitur.
-      pre: code console.log("Hello, world!");!");
+      p Choose a directory on your computer and create the following directory/file structure:  
+      pre: code.language-bash. 
+        my-local-pen 
+        ├── webpack.config.js
+        └── src
+            ├── index.js
+            ├── index.pug
+            ├── style.css
+            └── script.js
+      
+      p Next, from your terminal, <code>cd</code> into the project directory and initialize the project: 
+      pre: code.language-bash. 
+        npm init -y 
+
+      p And, in the resulting <code>package.json</code> file, swap the "test" script for the following "start" script so that you can run <code>npm start</code> from your terminal to start the dev server after it is setup. 
+      pre: code.language-diff-json.diff-highlight.
+        {
+          "name": "my-local-pen",
+          "version": "1.0.0",
+          "description": "",
+          "main": "webpack.config.js",
+          "scripts": {
+        -    "test": "echo \"Error: no test specified\" && exit 1"
+        +    "start": "webpack-dev-server --mode development"
+          },
+          "keywords": [],
+          "author": "",
+          "license": "ISC"
+        }
+
+      p Once that's done, install the following packages as dev dependencies: 
+      pre: code.language-bash. 
+        npm i -D webpack webpack-cli webpack-dev-server
+
+      p Next, setup an initial webpack configuration. Here, we will set <code>src/index.js</code> as the entry point and use the devServer with hot module reloading so that any changes made to code in development will be reflected immediately in the browser without having to refresh the page.  
+      pre: code.language-javascript. 
+        // webpack.config.js
+        module.exports = {
+          mode: 'development',
+          entry: './src/index.js',
+          output: {
+            filename: '[name].bundle.js',
+          },
+          devServer: { 
+            port: 3000,
+            contentBase: './dist',
+            hot: true,
+            inline: true
+          }
+        };
 
     +main-section(`${topics[2]}`)
-      p Integer volutpat placerat velit a bibendum. Cras quis scelerisque justo, et luctus leo. Nam lobortis semper felis, id tempus nibh feugiat a. Integer faucibus nec ipsum et consectetur. Aliquam nec sollicitudin magna. Mauris nec ornare nisl. Aliquam eu luctus enim, ac tincidunt elit. Nulla tristique odio molestie, gravida tortor nec, aliquet metus. Phasellus accumsan vitae mauris sit amet malesuada. Integer augue nunc, vestibulum vel tempus vel, laoreet in libero. Vivamus lobortis, sem in accumsan eleifend, dolor libero vulputate massa, non convallis turpis ante sollicitudin dui. Nam euismod nulla et placerat ultrices.
+      p Since <code>src/index.js</code> is the entry point for webpack, we will now configure the loader to process javascript files with Babel. 
+
+      p First, install the necessary packages for the babel loader: 
+      pre: code.language-bash. 
+        npm i -D @babel/core @babel/preset-env babel-loader  
+
+      pre: code.language-javascript. 
+        // webpack.config.js
+        module.exports = {
+          // ...
+          module: {
+            rules: [
+              {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: "babel-loader",
+                  options: {
+                    presets: [
+                      [
+                        '@babel/preset-env', 
+                        { modules: false }
+                      ]
+                    ],
+                  }
+                }
+              },
+            ]
+          },
+        };
+      
       p Nulla quis metus eu turpis pellentesque sagittis. Proin scelerisque at ante in porttitor. Fusce non ligula tempor, ullamcorper urna hendrerit, condimentum lectus. Nulla mi nulla, hendrerit vitae dui eu, fringilla molestie enim. Aliquam egestas nisi vel enim consequat feugiat. Praesent laoreet molestie lobortis. Aliquam ac felis pharetra, eleifend ante quis, fermentum mi. Fusce fringilla lacinia ex, sed sagittis magna mattis vel. Aliquam porttitor lorem gravida massa consequat elementum sit amet eu mauris. Ut id posuere nulla, et tincidunt mi. Suspendisse tempor vulputate mauris a auctor. Praesent vitae eros quis libero molestie tincidunt fermentum at ante.
-      pre: code console.log("Hello, world!");
+      
       ul 
         li Donec sagittis metus mollis, porttitor mi id, sagittis odio.
         li Pellentesque ultricies lectus vitae libero interdum, et tincidunt diam sagittis.
 
     +main-section(`${topics[3]}`)
-      p Phasellus iaculis mollis libero. Nulla id lacus at quam commodo lacinia. Pellentesque suscipit rutrum justo, ac aliquet dui lobortis eget. Suspendisse nec orci quis est consectetur tempus. In hac habitasse platea dictumst. Mauris egestas urna arcu, eget condimentum arcu sodales et. Quisque mattis ipsum ut rutrum feugiat. Sed neque magna, aliquet eu imperdiet et, consequat eget sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec justo sed turpis convallis interdum eget eget lacus. Morbi ultricies suscipit sem a malesuada. Vestibulum auctor commodo sapien vel rhoncus. Cras dapibus molestie magna, at malesuada arcu auctor in. Proin porttitor sapien elementum lacinia hendrerit. Curabitur consequat ipsum in sem ullamcorper, a auctor nunc hendrerit.
+      p Normally, when using Pug, you would create a Pug template, but with this plugin, the template is in html. For this reason, we will create a root div inside of body, to target for the injected pug content. This way, any script tags added to the end of body will be unaffected.
+
+      p First, install the necessary packages for the pug loader: 
+      pre: code.language-bash. 
+        npm i -D pug pug-loader mini-html-webpack-plugin @vxna/mini-html-webpack-template   
+
+      pre: code.language-javascript. 
+        // webpack.config.js
+        const path = require('path');
+
+        module.exports = {
+          // ...
+          module: {
+            rules: [
+              { /* babel loader */ },
+              {
+                test: /\.pug$/,
+                include: path.resolve(__dirname, 'src'),
+                use: ['pug-loader']
+              },
+            ]
+          },
+        };
+      
       p Nulla sit amet dictum ex. Sed nec semper felis. Cras molestie eget justo at congue. Integer consequat, ligula sagittis tincidunt convallis, nisl eros finibus urna, a maximus orci leo et tellus. Pellentesque sit amet magna nulla. Etiam non auctor ante. In mauris tortor, volutpat vel dolor a, sagittis rutrum risus. Nulla ac vehicula ante, et commodo velit. Vivamus vel faucibus justo. Maecenas sodales mauris quis enim ultricies convallis.
-      pre: code console.log("Hello, world!");
+      
+      pre: code.language-javascript. 
+        console.log("Hello, world!");
+        console.log("Hello, world!");
 
     +main-section(`${topics[4]}`)
-      p Phasellus pretium enim id laoreet laoreet. Donec a semper lacus, nec aliquet ligula. Praesent nec porta libero, sed pulvinar nunc. In tempus in lorem eu ultricies. Vestibulum a ultricies metus, a scelerisque nibh. Fusce et blandit sapien, sit amet vulputate tellus. In hac habitasse platea dictumst. Maecenas tincidunt, libero ac placerat lacinia, neque erat porttitor massa, vehicula vehicula diam tortor ac tortor. Nulla nec euismod nisl, vitae placerat libero. Proin suscipit commodo tortor ut posuere. Praesent vitae dolor quis odio elementum rutrum. Morbi scelerisque ligula sed mi sollicitudin, sit amet hendrerit orci lacinia. Ut congue non ex eget semper. Proin elementum augue nisi, dignissim pulvinar dolor sodales ac. Morbi venenatis interdum consectetur. Sed nec ullamcorper tortor, id ultricies velit.
+      p Phasellus pretium enim id laoreet laoreet. Donec a semper lacus, nec aliquet ligula.
+
+      p First, install the necessary packages for the css loader: 
+      pre: code.language-bash. 
+        npm i -D style-loader css-loader postcss-loader postcss-use postcss-simple-vars postcss-nested autoprefixer normalize.css      
+
+      pre: code.language-javascript. 
+        // webpack.config.js
+        const path = require('path');
+
+        module.exports = {
+          // ...
+          module: {
+            rules: [
+              { /* babel loader */ },
+              {
+                test: /\.pug$/,
+                include: path.resolve(__dirname, 'src'),
+                use: ['pug-loader']
+              },
+              {
+                test: /\.css$/,
+                use: [
+                  'style-loader', 
+                  { 
+                    loader: 'css-loader', 
+                    options: { importLoaders: 1 } 
+                  }, 
+                  {
+                    loader: 'postcss-loader',
+                    options: {
+                      ident: 'postcss',
+                      plugins: () => [
+                        require('postcss-use')({ modules: codePenPostCssUseModules }),
+                        require('autoprefixer')()
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+        };
+    
       p Suspendisse volutpat non mi pulvinar pretium. Integer in orci sodales, bibendum sapien id, commodo libero. Suspendisse interdum enim ut neque porttitor, nec bibendum odio tincidunt. Sed et nibh eu tellus consectetur luctus sit amet ac dolor. In blandit, mi in convallis tristique, metus sapien rhoncus mauris, sed dictum ipsum orci eu velit. Nunc posuere ac magna sed elementum. Cras elementum, nibh eu posuere bibendum, lorem lacus lacinia est, non mollis elit magna sit amet risus. Morbi condimentum justo a eros sollicitudin auctor. Vestibulum id rhoncus est. Etiam a accumsan libero.
-      pre: code console.log("Hello, world!");
+      
+      pre: code.language-javascript. 
+        console.log("Hello, world!");
+        console.log("Hello, world!");
+      
       ul 
         li Vestibulum posuere mauris quis luctus sodales.
+
+      pre: code.language-javascript. 
+        // webpack.config.js
+        const path = require('path');
+        const MiniHtmlWebpackPlugin = require('mini-html-webpack-plugin');
+        const codePenPostCssUseModules = [
+          'lost',
+          'postcss-apply',
+          'postcss-color-function',
+          'postcss-conditionals',
+          'postcss-custom-media',
+          'postcss-discard-comments',
+          'postcss-each',
+          'postcss-extend',
+          'postcss-flexbox',
+          'postcss-for',
+          'postcss-media-minmax',
+          'postcss-mixins',
+          'postcss-nested',
+          'postcss-nested-ancestors',
+          'postcss-preset-env',
+          'postcss-reverse-media',
+          'postcss-simple-vars',
+          'postcss-triangle'
+        ];
+
+        module.exports = {
+          mode: 'development',
+          entry: './src/index.js',
+          output: {
+            filename: '[name].bundle.js',
+          },
+          devServer: { 
+            port: 3000,
+            contentBase: './dist',
+            hot: true,
+            inline: true
+          },
+          module: {
+            rules: [
+              {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: "babel-loader",
+                  options: {
+                    presets: [
+                      ['@babel/preset-env', { modules: false }]
+                    ]
+                  }
+                }
+              },
+              {
+                test: /\.pug$/,
+                include: path.resolve(__dirname, 'src'),
+                use: ['pug-loader']
+              },
+              {
+                test: /\.css$/,
+                use: [
+                  'style-loader', 
+                  { loader: 'css-loader', options: { importLoaders: 1 } }, 
+                  {
+                    loader: 'postcss-loader',
+                    options: {
+                      ident: 'postcss',
+                      plugins: () => [
+                        require('postcss-use')({ modules: codePenPostCssUseModules }),
+                        require('autoprefixer')()
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          plugins: [
+            new MiniHtmlWebpackPlugin({
+              context: {
+                lang: 'en',
+                title: 'My Local CodePen',
+                container: 'root',
+                trimWhitespace: true
+              },
+              template: require('@vxna/mini-html-webpack-template')
+            })
+          ]
+        };
+
+
+
+  
+
+
+  
+
+ 
+
+

@@ -7,21 +7,20 @@ $primary-font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "
 
 $navbar-text-color: inherit;
 $navbar-text-color-mobile: white;
+$navbar-text-color-mobile-hover: lime;
 $navbar-background-color: inherit;
 $navbar-background-color-mobile: black;
 
 $navbar-border: 1px solid hsla(0, 0%, 0%, .2);
 
-
+$nav-link-background-color-hover: hsla(0, 100%, 0%, .1);
 $nav-list-transition: all .2s ease-out;
-
-
 
 $hamburger-height: 17px;
 $hamburger-width: calc($hamburger-height * 1.5);
 $hamburger-color: $navbar-text-color-mobile;
 $hamburger-bar-height: 3px;
-$hamburger-bar-border-radius: .1rem;
+$hamburger-bar-border-radius: 2px;
 
 $hamburger-bar-top-transition: top .1s ease .2s, transform .1s ease;
 $hamburger-bar-top-checked-transition: top .1s ease, transform .1s ease .2s;
@@ -36,15 +35,11 @@ div#fcc_test_suite_wrapper {
   display: none;
 }
 
-
-
 *, ::before, ::after {
   box-sizing: border-box;
 }
 
 html, body { height: 100%; }
-
-
 
 body {
   font-family: $primary-font-family;
@@ -89,8 +84,6 @@ p {
   .nav-container {
     position: sticky;
     top: 0;
-    /* height: 100%; */
-    /* border: 1px solid red; */
   }
 
   .nav-header {
@@ -104,8 +97,6 @@ p {
 
     & > * {
       margin: 0 20px;
-      /* outline: 1px solid lime; */
-      /* flex: 1 1 0; */
     }
   }
 }
@@ -114,9 +105,7 @@ p {
   list-style: none;
   margin: 0;
   padding: 0;
-  /* height: 0; */
   overflow: hidden;
-  /* line-height: 0; */
   max-height: 0;
   transition: $nav-list-transition;
 
@@ -126,17 +115,35 @@ p {
 }
 
 .nav-list-item {
-  padding: 1em 0;
+  display: block;
+  /* padding: .5em 1em .5em 1.5em; */
+  padding: 0;
+  border-bottom: $navbar-border;
+  &:last-child {
+    /* padding-bottom: 1em; */
+  }
 
   @media $breakpoint {
-    padding: 1em .5em 1em 1em;
+    /* padding: 1em .5em 1em 1em; */
+    /* padding: 0; */
     border-bottom: $navbar-border;
   }
 }
 
 .nav-link {
+  display: block;
   color: inherit;
   text-decoration: none;
+  padding: .5em 1em .5em 1.5em;
+
+  &:hover {
+    background-color: $nav-link-background-color-hover;
+  }
+
+}
+
+.nav-link.is-active {
+  background-color: lime;
 }
 
 .hamburger {
@@ -180,12 +187,6 @@ p {
 }
 
 #hamburger-toggle {
-  /* position: absolute;
-  top: 0;
-  right: 0;
-  opacity: 0; 
-  height: 0; 
-  width: 0; */
   display: none;
 
   &:checked {
@@ -227,10 +228,7 @@ p {
 }
 
 #main-doc {
-  /* height: 100%; */
   padding: 0 1rem;
-  /* background-color: goldenrod; */
-  /* filter: invert(100); */
 
   @media $breakpoint {
     flex: 1 1 auto;
@@ -257,11 +255,6 @@ p {
 
     .section-header {
       background-color: yellow;
-
-      h2 {
-        /* background-color: goldenrod;
-        transition: background-color 1s ease 1s; */
-      }
     }
 
     @media $breakpoint {
@@ -272,7 +265,3 @@ p {
     }
   }
 }
-
-
-
-
