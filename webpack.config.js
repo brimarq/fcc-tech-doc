@@ -1,8 +1,27 @@
 const path = require('path');
 const MiniHtmlWebpackPlugin = require('mini-html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const postcssNormalize = require('postcss-normalize');
 const webpackDashboard = require('webpack-dashboard/plugin');
+const codePenPostCssUseModules = [
+  'lost',
+  'postcss-apply',
+  'postcss-color-function',
+  'postcss-conditionals',
+  'postcss-custom-media',
+  'postcss-discard-comments',
+  'postcss-each',
+  'postcss-extend',
+  'postcss-flexbox',
+  'postcss-for',
+  'postcss-media-minmax',
+  'postcss-mixins',
+  'postcss-nested',
+  'postcss-nested-ancestors',
+  'postcss-preset-env',
+  'postcss-reverse-media',
+  'postcss-simple-vars',
+  'postcss-triangle'
+];
 
 module.exports = {
   mode: 'development',
@@ -45,8 +64,7 @@ module.exports = {
             options: {
               ident: 'postcss',
               plugins: () => [
-                postcssNormalize({ forceImport: 'normalize' }),
-                require('postcss-use')({ modules: /^postcss/ }),
+                require('postcss-use')({ modules: codePenPostCssUseModules }),
                 require('autoprefixer')()
               ]
             }
@@ -63,13 +81,19 @@ module.exports = {
         lang: 'en',
         title: 'Technical Documentation Page | fCC Responsive Web Design Projects',
         container: 'root',
-        // head: {
-        //   scripts: [
-        //     { defer: true, src: 'https://use.fontawesome.com/releases/v5.3.1/js/all.js' }
-        //   ]
-        // },
+        head: {
+          links: [
+            // { rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism-dark.min.css" },
+            // { rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/diff-highlight/prism-diff-highlight.css" }
+          ]
+        },
         body: {
-          scripts: [
+          scripts: [ 
+            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/prism.min.js"},
+            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-pug.js"},
+            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-bash.min.js"},
+            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-diff.min.js"},
+            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/diff-highlight/prism-diff-highlight.min.js"},
             { src: 'https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js' }
           ]
         },
