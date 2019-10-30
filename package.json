@@ -35,6 +35,7 @@
     "file-loader": "^4.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "mini-html-webpack-plugin": "^2.0.0",
+    "morphdom": "^2.5.10",
     "normalize.css": "^8.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-mixins": "^6.2.2",
