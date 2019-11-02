@@ -50,6 +50,10 @@ body {
 p {
   overflow-wrap: break-word;
   hyphens: auto;
+
+  code {
+    hyphens: none;
+  }
 }
 
 .container {
@@ -71,6 +75,7 @@ p {
   position: sticky;
   top: 0;
   /* left: 0; */
+  z-index: 1;
   color: $navbar-text-color-mobile;
   background-color: $navbar-background-color-mobile;
 
@@ -78,6 +83,7 @@ p {
     color: $navbar-text-color;
     background-color: $navbar-background-color;
     border-right: $navbar-border;
+    z-index: auto;
     /* box-shadow: 1px 0 2px 0px hsla(0, 0%, 0%, .2); */
   }
 
@@ -90,6 +96,12 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-height: 4em;
+    #title {
+      font-size: 1.5em;
+      font-weight: normal;
+      line-height: 1.2;
+    }
     
     @media $breakpoint {
       border-bottom: $navbar-border;
@@ -265,3 +277,29 @@ p {
     }
   }
 }
+
+.filetree {
+  /* display: inline-block; */
+  /* margin: 0 auto; */
+  /* text-align: center; */
+  li, ul {
+    list-style-type: none;
+  }
+  ul {
+    padding: 0;
+    margin-left: 2ch;
+    position: relative;
+  }
+  & > ul {
+    margin-left: 5ch;
+  }
+  &-dir::before {
+    content: "\25BC";
+    position: absolute;
+    left: -2ch;
+  }
+}
+
+/* ▼
+BLACK DOWN-POINTING TRIANGLE
+Unicode: U+25BC, UTF-8: E2 96 BC */
