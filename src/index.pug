@@ -1,11 +1,14 @@
-- var topics = ["Introduction", "Initial Setup", "JS Loader", "Pug Loader", "CSS Loader"];
+- var topics = ["Introduction", "Initial Setup", "Babel Loader", "Pug Loader", "CSS Loader", "HTML-CSS-JS", "Entry Point", "Conclusion"];
+- var snakeLowerCase = function(str){ return str.split(" ").join("_").toLowerCase(); };
+- var npmlink = `https://www.npmjs.com/package/`;
+- var dependencies = ['webpack', 'webpack-cli', 'webpack-dev-server', '@babel/core', '@babel/preset-env', 'babel-loader', 'pug', 'pug-loader', 'mini-html-webpack-plugin', '@vxna/mini-html-webpack-template', 'morphdom', 'style-loader', 'css-loader', 'postcss-loader', 'postcss-use', 'postcss-simple-vars', 'postcss-nested', 'autoprefixer'];
 
 mixin nav-list(topics)
   ul.nav-list: each topic in topics
-    li.nav-list-item: a.nav-link(href=`#${topic.split(" ").join("_").toLowerCase()}`) #{topic}
+    li.nav-list-item: a.nav-link(href=`#${snakeLowerCase(topic)}`) #{topic}
 
 mixin main-section(topic)
-  section.main-section(id=`${topic.split(" ").join("_").toLowerCase()}`)
+  section.main-section(id=`${snakeLowerCase(topic)}`)
     header.section-header
       h2= topic
     if block
@@ -13,13 +16,17 @@ mixin main-section(topic)
     else
       p --[ INSERT CONTENT HERE ]--
 
+mixin li-npmlink(pkgname, description)
+  li #[a(href=`https://www.npmjs.com/package/${pkgname}`) #{pkgname}]: !{description}
+
+
 .container
   nav#navbar
     .nav-container
       input#hamburger-toggle(type="checkbox" autocomplete="off")
       header.nav-header
         //- .nav-header-left
-        h1 navbar title
+        h1#title LocalPen Documentation
         //- .nav-header-right
         label(for="hamburger-toggle").hamburger
           span.hamburger-bar
@@ -30,198 +37,162 @@ mixin main-section(topic)
 
   main#main-doc
     +main-section(`${topics[0]}`)
-      p Have you ever been working in a <a href="https://codepen.io/"> CodePen.io</a> pen and wished there was a way to work locally, in your own IDE, with the advantage of version control? This guide will show how to mimic a CodePen pen on your own computer using <a href="https://webpack.js.org/">Webpack</a> with its dev server and hot reloading. Of course, you'll still have to copy & paste your finished code into Codepen; but, this way, you can version your code in a git repository as you work.  
+      p #[a(href="https://codepen.io/") CodePen.io] is a handy online code editor and learning environment for testing, experimenting, and showcasing work without the need to setup one's own tooling to see results. That said, if you want the convenience of version control as you code, you'll need something that works in your own development environment. 
+      p This guide will show how to setup #[a(href="https://webpack.js.org/") Webpack]'s development server with hot module replacement to develop code locally that can be pasted directly into the code frames in a CodePen pen whenever you're ready. 
       p Here, we will simulate a pen with this configuration: 
       ul
         li Pug
         li PostCSS
         li JS + Babel
-        li Normalize
         li Autoprefixer 
+        li Bulma via CDN
 
-      p NOTE: We will be setting up a basic Webpack configuration, but all of the nitty-gritty, dirty details of doing so is beyond the scope of this guide.
+      p NOTE: This guide assumes you have #[a(href="https://nodejs.org") NodeJS] and #[code npm] installed locally. 
       
 
     +main-section(`${topics[1]}`)
-      p Choose a directory on your computer and create the following directory/file structure:  
-      pre: code.language-bash. 
-        my-local-pen 
-        ├── webpack.config.js
-        └── src
-            ├── index.js
-            ├── index.pug
-            ├── style.css
-            └── script.js
-      
-      p Next, from your terminal, <code>cd</code> into the project directory and initialize the project: 
-      pre: code.language-bash. 
-        npm init -y 
+      p Create a project directory with the following structure: 
+      .filetree 
+        ul
+          li.filetree-dir my-local-pen
+            ul
+              li.filetree-file webpack.config.js
+              li.filetree-dir src 
+                ul 
+                  li.filetree-file index.js
+                  li.filetree-file index.pug
+                  li.filetree-file style.css
+                  li.filetree-file script.js
 
-      p And, in the resulting <code>package.json</code> file, swap the "test" script for the following "start" script so that you can run <code>npm start</code> from your terminal to start the dev server after it is setup. 
-      pre: code.language-diff-json.diff-highlight.
+      //- pre: code.language-bash.
+      //-   my-local-pen 
+      //-   ├── webpack.config.js
+      //-   └── src
+      //-       ├── index.js
+      //-       ├── index.pug
+      //-       ├── style.css
+      //-       └── script.js
+      
+      p From within the project root directory, run #[code npm init -y] to create a #[code package.json] file, and add the following #[code start] property to its #[code scripts] section: 
+      pre: code.language-json.
         {
-          "name": "my-local-pen",
-          "version": "1.0.0",
-          "description": "",
-          "main": "webpack.config.js",
           "scripts": {
-        -    "test": "echo \"Error: no test specified\" && exit 1"
-        +    "start": "webpack-dev-server --mode development"
+            "start": "webpack-dev-server --mode development"
           },
-          "keywords": [],
-          "author": "",
-          "license": "ISC"
         }
 
-      p Once that's done, install the following packages as dev dependencies: 
-      pre: code.language-bash. 
-        npm i -D webpack webpack-cli webpack-dev-server
+      p This project will use the following NodeJS dependencies: 
+      ul
+        +li-npmlink('webpack', 'Project bundler') 
+        +li-npmlink('webpack-cli', 'Webpack command line utility')
+        +li-npmlink('webpack-dev-server', 'Development server')
+        +li-npmlink('babel-loader', 'Loads ES2015+ code and transpiles to ES5 using Babel')
+        +li-npmlink('@babel/core', 'Babel compiler core')
+        +li-npmlink('@babel/preset-env', 'Babel presets')
+        +li-npmlink('pug', 'HTML template engine')
+        +li-npmlink('pug-loader', 'Loads Pug templates and returns a function')
+        +li-npmlink('mini-html-webpack-plugin', 'Creates HTML files to serve bundles')
+        +li-npmlink('@vxna/mini-html-webpack-template', 'Extends <code>mini-html-webpack-plugin</code> options')
+        +li-npmlink('morphdom', 'Selectively updates DOM node tree')
+        +li-npmlink('style-loader', 'Adds style tags to DOM')
+        +li-npmlink('css-loader', 'Resolves CSS <code>@import</code> rules and <code>url()</code> functions')
+        +li-npmlink('postcss-loader', 'Loads CSS and processes it with PostCSS')
+        +li-npmlink('postcss-use', 'Enables use of PostCSS plugins directly in stylesheets with <code>@use</code>')
+        +li-npmlink('autoprefixer', 'PostCSS plugin to parse CSS and add vendor prefixes')
+        +li-npmlink('postcss-simple-vars', 'PostCSS plugin to enable Sass-like variables in CSS')
+        +li-npmlink('postcss-nested', 'PostCSS plugin to enable Sass-like nested rules in CSS')
 
-      p Next, setup an initial webpack configuration. Here, we will set <code>src/index.js</code> as the entry point and use the devServer with hot module reloading so that any changes made to code in development will be reflected immediately in the browser without having to refresh the page.  
-      pre: code.language-javascript. 
-        // webpack.config.js
+      p Install the previous list as dev dependencies with this command: 
+      pre: code.language-bash.
+        npm i -D webpack webpack-cli webpack-dev-server @babel/core @babel/preset-env babel-loader pug pug-loader mini-html-webpack-plugin @vxna/mini-html-webpack-template morphdom style-loader css-loader postcss-loader postcss-use postcss-simple-vars postcss-nested autoprefixer
+
+      p Next, setup an initial webpack configuration with #[code devServer] configured to use hot module replacement:
+      pre: code.language-javascript.
+        // file: webpack.config.js
+
         module.exports = {
-          mode: 'development',
-          entry: './src/index.js',
-          output: {
-            filename: '[name].bundle.js',
-          },
           devServer: { 
             port: 3000,
-            contentBase: './dist',
-            hot: true,
-            inline: true
-          }
+            hot: true
+          },
+          module: {
+            rules: [
+              // {}, // babel loader rule
+              // {}, // pug loader rule
+              // [], // css loaders rule
+            ]
+          },
+          plugins: [
+            // MiniHtmlWebpackPlugin
+          ]
         };
 
     +main-section(`${topics[2]}`)
-      p Since <code>src/index.js</code> is the entry point for webpack, we will now configure the loader to process javascript files with Babel. 
-
-      p First, install the necessary packages for the babel loader: 
-      pre: code.language-bash. 
-        npm i -D @babel/core @babel/preset-env babel-loader  
-
-      pre: code.language-javascript. 
-        // webpack.config.js
-        module.exports = {
-          // ...
-          module: {
-            rules: [
-              {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                  loader: "babel-loader",
-                  options: {
-                    presets: [
-                      [
-                        '@babel/preset-env', 
-                        { modules: false }
-                      ]
-                    ],
-                  }
-                }
-              },
-            ]
-          },
-        };
-      
-      p Nulla quis metus eu turpis pellentesque sagittis. Proin scelerisque at ante in porttitor. Fusce non ligula tempor, ullamcorper urna hendrerit, condimentum lectus. Nulla mi nulla, hendrerit vitae dui eu, fringilla molestie enim. Aliquam egestas nisi vel enim consequat feugiat. Praesent laoreet molestie lobortis. Aliquam ac felis pharetra, eleifend ante quis, fermentum mi. Fusce fringilla lacinia ex, sed sagittis magna mattis vel. Aliquam porttitor lorem gravida massa consequat elementum sit amet eu mauris. Ut id posuere nulla, et tincidunt mi. Suspendisse tempor vulputate mauris a auctor. Praesent vitae eros quis libero molestie tincidunt fermentum at ante.
-      
-      ul 
-        li Donec sagittis metus mollis, porttitor mi id, sagittis odio.
-        li Pellentesque ultricies lectus vitae libero interdum, et tincidunt diam sagittis.
+      p In order to automatically pre-process files upon #[code import], webpack loaders are configured - in #[code module.rules] of the webpack config file - as an object with at least two properties: #[code test] and #[code use]. The value of #[code test] is a regular expression that selects by filename, and the #[code use] value specifies one or more loaders and options.  
+      p Configure the #[code babel-loader] to accept #[code .js] files outside of any #[code node_modules] directory using the #[code @babel/preset-env] preset with #[code { modules: false }] option to prevent Babel from transforming ES2015+ module syntax to CommonJS.
+      pre: code.language-javascript.
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: [
+                [
+                  '@babel/preset-env', 
+                  { modules: false }
+                ]
+              ],
+            }
+          }
+        }
 
     +main-section(`${topics[3]}`)
-      p Normally, when using Pug, you would create a Pug template, but with this plugin, the template is in html. For this reason, we will create a root div inside of body, to target for the injected pug content. This way, any script tags added to the end of body will be unaffected.
-
-      p First, install the necessary packages for the pug loader: 
-      pre: code.language-bash. 
-        npm i -D pug pug-loader mini-html-webpack-plugin @vxna/mini-html-webpack-template   
-
-      pre: code.language-javascript. 
-        // webpack.config.js
-        const path = require('path');
-
-        module.exports = {
-          // ...
-          module: {
-            rules: [
-              { /* babel loader */ },
-              {
-                test: /\.pug$/,
-                include: path.resolve(__dirname, 'src'),
-                use: ['pug-loader']
-              },
-            ]
-          },
-        };
-      
-      p Nulla sit amet dictum ex. Sed nec semper felis. Cras molestie eget justo at congue. Integer consequat, ligula sagittis tincidunt convallis, nisl eros finibus urna, a maximus orci leo et tellus. Pellentesque sit amet magna nulla. Etiam non auctor ante. In mauris tortor, volutpat vel dolor a, sagittis rutrum risus. Nulla ac vehicula ante, et commodo velit. Vivamus vel faucibus justo. Maecenas sodales mauris quis enim ultricies convallis.
-      
-      pre: code.language-javascript. 
-        console.log("Hello, world!");
-        console.log("Hello, world!");
-
-    +main-section(`${topics[4]}`)
-      p Phasellus pretium enim id laoreet laoreet. Donec a semper lacus, nec aliquet ligula.
-
-      p First, install the necessary packages for the css loader: 
-      pre: code.language-bash. 
-        npm i -D style-loader css-loader postcss-loader postcss-use postcss-simple-vars postcss-nested autoprefixer normalize.css      
-
-      pre: code.language-javascript. 
-        // webpack.config.js
-        const path = require('path');
-
-        module.exports = {
-          // ...
-          module: {
-            rules: [
-              { /* babel loader */ },
-              {
-                test: /\.pug$/,
-                include: path.resolve(__dirname, 'src'),
-                use: ['pug-loader']
-              },
-              {
-                test: /\.css$/,
-                use: [
-                  'style-loader', 
-                  { 
-                    loader: 'css-loader', 
-                    options: { importLoaders: 1 } 
-                  }, 
-                  {
-                    loader: 'postcss-loader',
-                    options: {
-                      ident: 'postcss',
-                      plugins: () => [
-                        require('postcss-use')({ modules: codePenPostCssUseModules }),
-                        require('autoprefixer')()
-                      ]
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-        };
-    
-      p Suspendisse volutpat non mi pulvinar pretium. Integer in orci sodales, bibendum sapien id, commodo libero. Suspendisse interdum enim ut neque porttitor, nec bibendum odio tincidunt. Sed et nibh eu tellus consectetur luctus sit amet ac dolor. In blandit, mi in convallis tristique, metus sapien rhoncus mauris, sed dictum ipsum orci eu velit. Nunc posuere ac magna sed elementum. Cras elementum, nibh eu posuere bibendum, lorem lacus lacinia est, non mollis elit magna sit amet risus. Morbi condimentum justo a eros sollicitudin auctor. Vestibulum id rhoncus est. Etiam a accumsan libero.
-      
-      pre: code.language-javascript. 
-        console.log("Hello, world!");
-        console.log("Hello, world!");
-      
-      ul 
-        li Vestibulum posuere mauris quis luctus sodales.
-
-      pre: code.language-javascript. 
-        // webpack.config.js
+      p The configuration for this rule and accompanying plugin will require three dependencies, so #[code require()] these at the top of #[code webpack.config.js]: 
+      pre: code.language-javascript.
         const path = require('path');
         const MiniHtmlWebpackPlugin = require('mini-html-webpack-plugin');
-        const codePenPostCssUseModules = [
+        const miniHtmlWebpackPluginTemplate = require('@vxna/mini-html-webpack-template');
+
+      p Now, configure this rule to use #[code pug-loader] for #[code .pug] files, using #[code path] to include  only those found in the #[code src/] directory:
+      pre: code.language-javascript.
+        {
+          test: /\.pug$/,
+          include: path.resolve(__dirname, 'src'),
+          use: ['pug-loader']
+        }
+
+      p Next, in the #[code module.exports.plugins] array, create a new instance of #[code MiniHtmlWebpackPlugin] with the #[code miniHtmlWebpackPluginTemplate] to extend the options in #[code context]. If #[code container] is present, its value will be used as the #[code id] to create a container #[code #{'<div>'}] as the first child element under #[code #{'<body>'}]. This is important for this setup, because we will target that element when injecting content from the Pug template. The #[code head] and #[code body] options can be used for #[code links] and #[code scripts]; and, here we will include the CDN versions of #[a(href="https://bulma.io/") Bulma] and #[a(href="https://fontawesome.com/") FontAwesome]. Normally, it would be better to use these as #[code npm] packages for more flexibility and customization, but here we're matching the limitations of a CodePen pen.   
+      pre: code.language-javascript.
+        plugins: [
+          new MiniHtmlWebpackPlugin({
+            context: {
+              lang: 'en',
+              title: 'My LocalPen',
+              container: 'root',
+              head: {
+                links: [
+                  { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" }
+                ],
+                scripts: [
+                  { defer: true, src: "https://use.fontawesome.com/releases/v5.3.1/js/all.js" }
+                ]
+              },
+              body: {
+                scripts: []
+              },
+              trimWhitespace: true
+            },
+            template: miniHtmlWebpackPluginTemplate
+          })
+        ]
+
+    +main-section(`${topics[4]}`)
+      p To configure this rule, we need to #[code require()] two more dependencies, and we'll store an array of CodePen's available PostCSS plugins at the top of #[code webpack.config.js]: 
+      pre: code.language-javascript.
+        const postCssUse = require('postcss-use');
+        const autoprefixer = require('autoprefixer');
+        const codePenPostCssPlugins = [
           'lost',
           'postcss-apply',
           'postcss-color-function',
@@ -242,76 +213,108 @@ mixin main-section(topic)
           'postcss-triangle'
         ];
 
-        module.exports = {
-          mode: 'development',
-          entry: './src/index.js',
-          output: {
-            filename: '[name].bundle.js',
-          },
-          devServer: { 
-            port: 3000,
-            contentBase: './dist',
-            hot: true,
-            inline: true
-          },
-          module: {
-            rules: [
-              {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                  loader: "babel-loader",
-                  options: {
-                    presets: [
-                      ['@babel/preset-env', { modules: false }]
-                    ]
-                  }
-                }
-              },
-              {
-                test: /\.pug$/,
-                include: path.resolve(__dirname, 'src'),
-                use: ['pug-loader']
-              },
-              {
-                test: /\.css$/,
-                use: [
-                  'style-loader', 
-                  { loader: 'css-loader', options: { importLoaders: 1 } }, 
-                  {
-                    loader: 'postcss-loader',
-                    options: {
-                      ident: 'postcss',
-                      plugins: () => [
-                        require('postcss-use')({ modules: codePenPostCssUseModules }),
-                        require('autoprefixer')()
-                      ]
-                    }
-                  }
+      p Now we will configure Webpack to process CSS and write auto-prefixed rules into #[code #{'<style>'}] tags in the HTML output. As in the previous loader rules, set the #[code test] value to select #[code .css] files. Unlike the others, this one uses #[em three] loaders to process code in succesion, #[strong #[em in reverse order]], to output the final CSS code. 
+      pre: code.language-javascript.
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader', 
+            { 
+              loader: 'css-loader', 
+              options: { importLoaders: 1 } 
+            }, 
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  postCssUse({ modules: codePenPostCssPlugins }),
+                  autoprefixer()
                 ]
               }
-            ]
-          },
-          plugins: [
-            new MiniHtmlWebpackPlugin({
-              context: {
-                lang: 'en',
-                title: 'My Local CodePen',
-                container: 'root',
-                trimWhitespace: true
-              },
-              template: require('@vxna/mini-html-webpack-template')
-            })
+            }
           ]
-        };
+        }
+      
+      p While #[code style-loader] does have configuration options, setting it here as a string will use its default settings. Next, #[code css-loader] must be made aware of loaders before it, so we set its #[code importLoaders] option accordingly. Lastly, the #[code plugins] option of #[code postcss-loader] is a function that loads #[code postCssUse] with its list of allowable #[code codePenPostCssPlugins] and #[code autoprefixer] with its default settings.
+      
+    +main-section(`${topics[5]}`) 
+      P The files #[code index.pug], #[code style.css], and #[code script.js] in #[code /src] will contain the code for CodePen's respective HTML, CSS, and JS code editor panels. As we have configured this project, you should be able to paste code from these files directly into Codepen without modification. Below is some basic sample code to test our configuration. 
+
+      p #[strong index.pug] makes use of Bulma classes and a FontAwesome icon to test the CDN links configured in #[code MiniHtmlWebpackPlugin], and includes a button to test that the #[code script.js] file is properly bundled. 
+      pre: code.language-pug.
+        //- file: src/index.pug
+        section.hero.is-fullheight.is-dark
+          .hero-body
+            .container.has-text-centered
+              h1.title.is-size-2 L\#[i.fab.fa-codepen]CALPEN
+              button.button.is-info Check script.js
+
+        
+      p #[strong style.css] enables the #[code postcss-simple-vars] and #[code postcss-nested] PostCSS plugins directly in the stylesheet with #[code @use], and makes use of those features below. #[em NOTE: if you want to use more of the plugins from #[code codePenPostCssPlugins] in this project, you'll need to install them with #[code npm] first.]
+      pre: code.language-scss.
+        /* file: src/style.css */
+        @use postcss-simple-vars;
+        @use postcss-nested;
+
+        $title-letter-spacing: .15em;
+
+        section.hero > .hero-body > .container {
+          h1.title {
+            font-weight: normal;
+            letter-spacing: $title-letter-spacing;
+            margin-right: calc($title-letter-spacing * -1);
+            svg {
+              margin-right: .2em;
+            }
+          }
+        }
 
 
+      p #[strong script.js] simply adds an event listener to the button in #[code index.pug] that triggers an #[code alert()] on click.
+      pre: code.language-javascript.
+        // file: src/script.js
+        document.addEventListener(
+          'DOMContentLoaded', 
+          () => document
+            .querySelector('button')
+            .addEventListener("click", btnClickHandler)
+        );
 
-  
+        function btnClickHandler() {
+          return alert('It works!');
+        }
 
+    +main-section(`${topics[6]}`)
+      p In order for Webpack to begin the bundling process, it needs an entry point. By default, it looks for #[code src/index.js], which is what we will use. First, we #[code import] the files to be processed by the previously configured loaders, as well as any needed dependencies. Notice that, instead of importing #[code index.pug] directly (like #[code style.css] and #[code script.js]), we import the function created by #[code pug-loader] into #[code pugToHtmlStr] so that we can customize how the compiled HTML is injected into the page. Here, we can facilitate HTML hot reloading with an #[a(href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE") IIFE] that: 
+      ol
+        li Creates a #[code root] element object for the #[code #{'<div id="root">'}] in DOM. 
+        li Creates a virtual #[code #{'<div id="root">'}] as a document fragment in #[code newRoot] containing the compiled HTML returned from #[code pugToHtmlStr()]. 
+        li Uses #[code morphdom()] to compare children of #[code root] to those of #[code newRoot], updating only changed elements in DOM while keeping any stateful properties.
+      p Finally, if HMR is active, we use #[code module.hot.accept()] to accept updates for this module or any of its dependencies, logging any errors to the console.
+      pre: code.language-javascript.
+        // file: src/index.js
+        import morphdom from 'morphdom';
+        import { default as pugToHtmlStr } from './index.pug';
+        import './style.css';
+        import './script.js';
 
-  
+        (() => {
+          let root = document.getElementById('root'); 
+          let newRoot = document.createRange().createContextualFragment(
+            `<div id="root">${pugToHtmlStr()}</div>`
+          );
+          return morphdom(root, newRoot, {
+            onBeforeElUpdated: (fromEl, toEl) => (
+              fromEl.isEqualNode(toEl) ? false : true
+            ),
+            childrenOnly: true
+          });
+        })();
 
- 
+        if (module.hot) {
+          module.hot.accept(err => console.log(err));
+        }
 
+    +main-section(`${topics[7]}`)
+      p Now you can run the app with #[code npm start]!
 
