@@ -1,7 +1,35 @@
 const path = require('path');
 const MiniHtmlWebpackPlugin = require('mini-html-webpack-plugin');
+const miniHtmlWebpackPluginTemplate = require('@vxna/mini-html-webpack-template');
+const postCssUse = require('postcss-use');
+const autoprefixer = require('autoprefixer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpackDashboard = require('webpack-dashboard/plugin');
+
+const cdn = {
+  fccTestSuite: { script: { src: "https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js" } },
+  normalize: { link: { rel: "stylesheet", href: "https://unpkg.com/normalize.css@8.0.1/normalize.css"} },
+  bulma: { link: { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" } },
+  fontAwesome: { script: { defer: true, src: "https://use.fontawesome.com/releases/v5.3.1/js/all.js" } },
+  prismjs: {
+    link: {
+      themes: {
+        dark: { rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism-dark.min.css" },
+        prism: { rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.min.css" }
+      }
+    },
+    script: {
+      prism: { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/prism.min.js"},
+      languages: {
+        pug: { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-pug.min.js"},
+        json: { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-json.min.js"},
+        bash: { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-bash.min.js"},
+        scss: { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-scss.min.js"}
+      }
+    },
+  }
+};
+
 const codePenPostCssUseModules = [
   'lost',
   'postcss-apply',
@@ -31,9 +59,7 @@ module.exports = {
   },
   devServer: { 
     port: 3000,
-    contentBase: './dist',
-    hot: true,
-    inline: true
+    hot: true
   },
   module: {
     rules: [
@@ -62,10 +88,9 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
               plugins: () => [
-                require('postcss-use')({ modules: codePenPostCssUseModules }),
-                require('autoprefixer')()
+                postCssUse({ modules: codePenPostCssUseModules }),
+                autoprefixer()
               ]
             }
           }
@@ -83,23 +108,24 @@ module.exports = {
         container: 'root',
         head: {
           links: [
-            // { rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism-dark.min.css" },
-            // { rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/diff-highlight/prism-diff-highlight.css" }
-          ]
+            // cdn.normalize.link,
+            // cdn.prismjs.link.themes.prism
+          ],
+          scripts: []
         },
         body: {
           scripts: [ 
-            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/prism.min.js"},
-            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-pug.js"},
-            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-bash.min.js"},
-            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-diff.min.js"},
-            // { src: "https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/diff-highlight/prism-diff-highlight.min.js"},
-            { src: 'https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js' }
+            // cdn.prismjs.script.prism,
+            // cdn.prismjs.script.languages.pug,
+            // cdn.prismjs.script.languages.json,
+            // cdn.prismjs.script.languages.bash,
+            // cdn.prismjs.script.languages.scss,
+            cdn.fccTestSuite.script
           ]
         },
         trimWhitespace: true
       },
-      template: require('@vxna/mini-html-webpack-template')
+      template: miniHtmlWebpackPluginTemplate
     })
   ],
   optimization: {
