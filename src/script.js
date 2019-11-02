@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Close mobile dropdown menu on orientation change
   window.addEventListener("orientationchange", () => hamburgerToggle.checked = false);
-
   navLinks.forEach(link => link.addEventListener("click", linkClickHandler));
 
   function linkClickHandler() {
