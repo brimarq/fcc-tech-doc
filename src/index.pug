@@ -1,7 +1,15 @@
 - var topics = ["Introduction", "Initial Setup", "Babel Loader", "Pug Loader", "CSS Loader", "HTML-CSS-JS", "Entry Point", "Conclusion"];
 - var snakeLowerCase = function(str){ return str.split(" ").join("_").toLowerCase(); };
-- var npmlink = `https://www.npmjs.com/package/`;
 - var dependencies = ['webpack', 'webpack-cli', 'webpack-dev-server', '@babel/core', '@babel/preset-env', 'babel-loader', 'pug', 'pug-loader', 'mini-html-webpack-plugin', '@vxna/mini-html-webpack-template', 'morphdom', 'style-loader', 'css-loader', 'postcss-loader', 'postcss-use', 'postcss-simple-vars', 'postcss-nested', 'autoprefixer'];
+
+- var toggler = function toggleFccTester(){ return document.querySelector("#fcc_test_suite_wrapper").shadowRoot.querySelector("#fcc_toggle").checked ^= 1;};
+
+- var svgFccLogo = `<svg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 712 484' id='svgFccLogo'><path d='M136.83 9.96c2.35 2.34 4.7 5.71 4.71 9.1.01 5.86-6.87 13.81-19.59 26.87C68.91 97 42.23 159.54 42.41 234.97c.2 83.45 28.26 150.47 82.8 202.41 11.47 10.25 16.18 18.31 16.2 25.21 0 3.38-2.33 6.9-4.67 10.29-2.2 2.35-6.89 4.71-10.27 4.71-12.62.03-30.28-14.89-53.34-43.92-44.9-55.03-65.2-115.8-66.34-198.62C5.74 152.19 31.72 96 82.57 37.99c18.3-20.73 33.56-31.5 43.97-31.52 3.38-.01 6.9 1.15 10.29 3.49zM415.42 249.9c-19.93-5.09 61.85-101.71-83.5-217.39 0 0 19.07 60.59-77.09 195.8-96.21 135.16 42.78 215.68 42.78 215.68s-65.23-34.76 10.6-158.52c13.57-22.45 31.33-42.78 53.38-88.54 0 0 19.52 27.55 9.33 87.28-15.24 90.26 66.09 64.43 67.35 65.69 28.41 33.45-23.53 92.24-26.69 94.09-3.15 1.8 148.33-91.12 40.71-230.96-7.37 7.37-16.95 41.97-36.87 36.87zm159.84-240c-2.35 2.34-4.7 5.71-4.71 9.1-.01 5.86 6.87 13.81 19.59 26.87 53.04 51.06 79.72 113.61 79.54 189.04-.2 83.45-28.26 150.47-82.8 202.41-11.47 10.25-16.18 18.31-16.2 25.21 0 3.38 2.33 6.9 4.67 10.29 2.2 2.35 6.89 4.7 10.27 4.71 12.62.03 30.28-14.89 53.34-43.92 44.9-55.03 65.2-115.8 66.34-198.62 1.05-82.86-24.93-139.05-75.78-197.06-18.3-20.73-33.56-31.5-43.97-31.52-3.38-.01-6.9 1.15-10.29 3.49z'/></svg>`;
+- var svgPwrSymbol = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' preserveAspectRatio='xMinYMin meet'><path d='M136.68,123.21A34.59,34.59,0,0,0,91.31,71a251.26,251.26,0,1,0,327.85-1.32,34.59,34.59,0,0,0-44.95,52.6,181.94,181.94,0,0,1,63.86,138.49c0,100.39-81.68,182.07-182.07,182.07S73.93,361.13,73.93,260.74A182.09,182.09,0,0,1,136.68,123.21Z'></path><path d='M290.59,277V34.59a34.59,34.59,0,0,0-69.19,0V277A34.59,34.59,0,1,0,290.59,277Z'></path></svg>`;
+- var svgLocalPen = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 50.55'><path d='M44.2 42.7a384.98 384.98 0 0 1-12.17-8.28c-.33-.39-.36-1.14-.36-9.16v-8.74l.47-.5c.26-.26 5.73-3.98 12.17-8.25C55.33.45 56.06 0 56.94 0c.88 0 1.61.45 12.64 7.77a384.3 384.3 0 0 1 12.17 8.26l.47.5v17.48l-.47.5c-.26.27-5.74 3.99-12.17 8.26-11.04 7.33-11.75 7.77-12.64 7.77-.88 0-1.6-.45-12.74-7.85zm10.4-3.8l-.06-4.75-4.39-2.96a98.2 98.2 0 0 0-4.54-2.98c-.09 0-1.77 1.06-3.73 2.37l-3.58 2.39 8.02 5.34c4.4 2.94 8.08 5.34 8.17 5.34.09 0 .14-2.13.1-4.75zm13.1-.68l7.88-5.25-3.57-2.39a52.61 52.61 0 0 0-3.73-2.37c-.1 0-2.14 1.35-4.55 2.98l-4.39 2.96-.05 4.78c-.05 4.07-.01 4.76.24 4.66a394 394 0 0 0 8.18-5.37zm-7.27-10.6a36.11 36.11 0 0 0 3.4-2.4c0-.08-1.55-1.19-3.44-2.45l-3.45-2.3-3.44 2.3a35.77 35.77 0 0 0-3.45 2.45c0 .15 6.67 4.65 6.89 4.65.05 0 1.62-1.01 3.49-2.25zm-21.59-.78c1.22-.8 2.22-1.52 2.22-1.59 0-.15-4.42-3.11-4.65-3.11-.08 0-.15 1.42-.15 3.15s.09 3.12.19 3.08c.1-.03 1.17-.73 2.4-1.53zm38.78-1.57c0-1.72-.07-3.13-.15-3.13-.22 0-4.65 2.96-4.65 3.11 0 .15 4.4 3.12 4.64 3.14.1.01.16-1.4.16-3.12zM54.64 11.56c0-2.57-.06-4.67-.15-4.67-.3 0-15.94 10.52-15.88 10.7.03.09 1.6 1.2 3.48 2.45l3.42 2.27 4.57-3.04 4.56-3.04zm17.7 8.1a29.41 29.41 0 0 0 2.98-2.11c0-.17-15.69-10.66-15.93-10.66-.08 0-.15 2.1-.15 4.67v4.67l4.54 3.04c4.46 2.98 4.56 3.03 5.07 2.7.29-.17 1.86-1.21 3.5-2.3zm129.68 21.98l-.61-.6V9.7l.64-.64.64-.64h7.68c8.3 0 8.7.04 10.99 1.2 1.34.68 3.65 3 4.33 4.33 1.62 3.2 1.63 7 .04 10.16a11.68 11.68 0 0 1-5.7 5.03c-1.1.44-1.56.48-7.55.58l-6.37.1-.1 5.72-.1 5.7-.6.51c-.89.77-2.47.72-3.29-.1zm15.53-16.82a5.82 5.82 0 0 0 4.45-4.48c.29-1.14.29-1.4 0-2.52a5.82 5.82 0 0 0-4.46-4.5c-.97-.25-2.32-.3-6.34-.26l-5.1.05-.05 5.75c-.03 3.15 0 5.86.05 6 .16.41 9.86.37 11.46-.05zm20.01 16.8l-.64-.65V9.7l.64-.64.64-.64h20.89l.61.6c.82.83.87 2.4.1 3.3l-.5.59-8.84.1-8.84.1v9.82l5.7.1 5.72.11.5.59c.38.45.5.83.5 1.6 0 .78-.12 1.17-.5 1.61l-.5.59-5.71.1-5.71.1v9.82l8.84.1 8.84.11.5.59c.77.9.72 2.47-.1 3.3l-.61.6H238.2zm35.48.02l-.61-.6V9.63l.6-.61c.52-.52.79-.61 1.67-.61.8 0 1.17.1 1.55.47.28.25 4.62 5.7 9.63 12.1a871.1 871.1 0 0 0 9.32 11.77c.13.07.2-4.23.2-11.5V9.64l.61-.61c.52-.52.78-.61 1.69-.61.91 0 1.17.09 1.69.6l.6.62v31.32l-.6.64c-.52.56-.75.65-1.66.65-.8 0-1.17-.1-1.56-.47a587 587 0 0 1-9.63-12.1c-5.02-6.4-9.21-11.7-9.32-11.77-.12-.07-.2 4.23-.2 11.5v11.62l-.6.61c-.53.52-.78.61-1.7.61-.9 0-1.17-.1-1.68-.6zm-103.3.01l-.63-.64V9.75l.6-.68s.4-.5.68-.61c.61-.24 1.35-.2 1.97 0 .3.1.53.34.76.55.24.2.64.67.64.67l.05 3.48V37.6l8.84.1 8.84.1.5.6c.77.88.72 2.46-.1 3.29l-.61.6h-20.89zm-29.9-13.68l5.12-13.75 5.02 13.75zm-7.77 14.42c1.32 0 2.55-.59 3.08-2.06l3.17-8.38h13.28l3.17 8.38a2.93 2.93 0 0 0 2.95 2.06c1.4 0 2.32-.7 2.32-1.86 0-.47-.14-.99-.36-1.53l-11.35-28.24a4.1 4.1 0 0 0-.68-1.17l-1.43-.82a2.66 2.66 0 0 0-1.42-.3c-.61 0-1.02 0-1.38.25l-1.32.9c-.23.3-.43.67-.62 1.14L130.13 39a4.36 4.36 0 0 0-.36 1.55c0 1.13.92 1.84 2.3 1.84zm-26.17-.3c-6.1-1.21-10.9-5.67-12.8-11.87-.42-1.4-.48-2.02-.48-5.1 0-3.07.06-3.69.49-5.09a16.78 16.78 0 0 1 11.2-11.46c2.03-.66 6.45-.83 8.8-.35 3.03.62 6 2.17 8.1 4.22.9.88.96 1 .96 2.05 0 .95-.09 1.2-.6 1.74-.52.52-.79.62-1.67.62-.95 0-1.15-.1-2.2-1.03a11.62 11.62 0 0 0-8.37-3.06 11.7 11.7 0 0 0-11.52 8.42 13.66 13.66 0 0 0 0 7.89 11.73 11.73 0 0 0 11.41 8.42c3.26.02 5.74-.87 8.36-3.01 1.18-.97 1.43-1.08 2.35-1.08.85 0 1.12.1 1.63.62.52.53.61.8.61 1.74 0 1.02-.06 1.17-.87 1.95a18.02 18.02 0 0 1-7.8 4.2c-1.8.44-5.83.53-7.6.18zM.64 41.55L0 40.9V9.64l.61-.68s.4-.5.68-.6c.6-.24 1.34-.2 1.97 0 .3.1.52.34.76.55.23.2.64.67.64.67l.04 3.47V37.5l8.84.1 8.85.11.5.59c.77.89.72 2.47-.1 3.3l-.62.6H1.3z'/></svg>`;
+
+mixin localpen-logo(height, color)
+  img(alt=`LocalPen` src=`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='${height}' fill='${color}' viewBox='0 0 300 50.55'><path d='M44.2 42.7a384.98 384.98 0 0 1-12.17-8.28c-.33-.39-.36-1.14-.36-9.16v-8.74l.47-.5c.26-.26 5.73-3.98 12.17-8.25C55.33.45 56.06 0 56.94 0c.88 0 1.61.45 12.64 7.77a384.3 384.3 0 0 1 12.17 8.26l.47.5v17.48l-.47.5c-.26.27-5.74 3.99-12.17 8.26-11.04 7.33-11.75 7.77-12.64 7.77-.88 0-1.6-.45-12.74-7.85zm10.4-3.8l-.06-4.75-4.39-2.96a98.2 98.2 0 0 0-4.54-2.98c-.09 0-1.77 1.06-3.73 2.37l-3.58 2.39 8.02 5.34c4.4 2.94 8.08 5.34 8.17 5.34.09 0 .14-2.13.1-4.75zm13.1-.68l7.88-5.25-3.57-2.39a52.61 52.61 0 0 0-3.73-2.37c-.1 0-2.14 1.35-4.55 2.98l-4.39 2.96-.05 4.78c-.05 4.07-.01 4.76.24 4.66a394 394 0 0 0 8.18-5.37zm-7.27-10.6a36.11 36.11 0 0 0 3.4-2.4c0-.08-1.55-1.19-3.44-2.45l-3.45-2.3-3.44 2.3a35.77 35.77 0 0 0-3.45 2.45c0 .15 6.67 4.65 6.89 4.65.05 0 1.62-1.01 3.49-2.25zm-21.59-.78c1.22-.8 2.22-1.52 2.22-1.59 0-.15-4.42-3.11-4.65-3.11-.08 0-.15 1.42-.15 3.15s.09 3.12.19 3.08c.1-.03 1.17-.73 2.4-1.53zm38.78-1.57c0-1.72-.07-3.13-.15-3.13-.22 0-4.65 2.96-4.65 3.11 0 .15 4.4 3.12 4.64 3.14.1.01.16-1.4.16-3.12zM54.64 11.56c0-2.57-.06-4.67-.15-4.67-.3 0-15.94 10.52-15.88 10.7.03.09 1.6 1.2 3.48 2.45l3.42 2.27 4.57-3.04 4.56-3.04zm17.7 8.1a29.41 29.41 0 0 0 2.98-2.11c0-.17-15.69-10.66-15.93-10.66-.08 0-.15 2.1-.15 4.67v4.67l4.54 3.04c4.46 2.98 4.56 3.03 5.07 2.7.29-.17 1.86-1.21 3.5-2.3zm129.68 21.98l-.61-.6V9.7l.64-.64.64-.64h7.68c8.3 0 8.7.04 10.99 1.2 1.34.68 3.65 3 4.33 4.33 1.62 3.2 1.63 7 .04 10.16a11.68 11.68 0 0 1-5.7 5.03c-1.1.44-1.56.48-7.55.58l-6.37.1-.1 5.72-.1 5.7-.6.51c-.89.77-2.47.72-3.29-.1zm15.53-16.82a5.82 5.82 0 0 0 4.45-4.48c.29-1.14.29-1.4 0-2.52a5.82 5.82 0 0 0-4.46-4.5c-.97-.25-2.32-.3-6.34-.26l-5.1.05-.05 5.75c-.03 3.15 0 5.86.05 6 .16.41 9.86.37 11.46-.05zm20.01 16.8l-.64-.65V9.7l.64-.64.64-.64h20.89l.61.6c.82.83.87 2.4.1 3.3l-.5.59-8.84.1-8.84.1v9.82l5.7.1 5.72.11.5.59c.38.45.5.83.5 1.6 0 .78-.12 1.17-.5 1.61l-.5.59-5.71.1-5.71.1v9.82l8.84.1 8.84.11.5.59c.77.9.72 2.47-.1 3.3l-.61.6H238.2zm35.48.02l-.61-.6V9.63l.6-.61c.52-.52.79-.61 1.67-.61.8 0 1.17.1 1.55.47.28.25 4.62 5.7 9.63 12.1a871.1 871.1 0 0 0 9.32 11.77c.13.07.2-4.23.2-11.5V9.64l.61-.61c.52-.52.78-.61 1.69-.61.91 0 1.17.09 1.69.6l.6.62v31.32l-.6.64c-.52.56-.75.65-1.66.65-.8 0-1.17-.1-1.56-.47a587 587 0 0 1-9.63-12.1c-5.02-6.4-9.21-11.7-9.32-11.77-.12-.07-.2 4.23-.2 11.5v11.62l-.6.61c-.53.52-.78.61-1.7.61-.9 0-1.17-.1-1.68-.6zm-103.3.01l-.63-.64V9.75l.6-.68s.4-.5.68-.61c.61-.24 1.35-.2 1.97 0 .3.1.53.34.76.55.24.2.64.67.64.67l.05 3.48V37.6l8.84.1 8.84.1.5.6c.77.88.72 2.46-.1 3.29l-.61.6h-20.89zm-29.9-13.68l5.12-13.75 5.02 13.75zm-7.77 14.42c1.32 0 2.55-.59 3.08-2.06l3.17-8.38h13.28l3.17 8.38a2.93 2.93 0 0 0 2.95 2.06c1.4 0 2.32-.7 2.32-1.86 0-.47-.14-.99-.36-1.53l-11.35-28.24a4.1 4.1 0 0 0-.68-1.17l-1.43-.82a2.66 2.66 0 0 0-1.42-.3c-.61 0-1.02 0-1.38.25l-1.32.9c-.23.3-.43.67-.62 1.14L130.13 39a4.36 4.36 0 0 0-.36 1.55c0 1.13.92 1.84 2.3 1.84zm-26.17-.3c-6.1-1.21-10.9-5.67-12.8-11.87-.42-1.4-.48-2.02-.48-5.1 0-3.07.06-3.69.49-5.09a16.78 16.78 0 0 1 11.2-11.46c2.03-.66 6.45-.83 8.8-.35 3.03.62 6 2.17 8.1 4.22.9.88.96 1 .96 2.05 0 .95-.09 1.2-.6 1.74-.52.52-.79.62-1.67.62-.95 0-1.15-.1-2.2-1.03a11.62 11.62 0 0 0-8.37-3.06 11.7 11.7 0 0 0-11.52 8.42 13.66 13.66 0 0 0 0 7.89 11.73 11.73 0 0 0 11.41 8.42c3.26.02 5.74-.87 8.36-3.01 1.18-.97 1.43-1.08 2.35-1.08.85 0 1.12.1 1.63.62.52.53.61.8.61 1.74 0 1.02-.06 1.17-.87 1.95a18.02 18.02 0 0 1-7.8 4.2c-1.8.44-5.83.53-7.6.18zM.64 41.55L0 40.9V9.64l.61-.68s.4-.5.68-.6c.6-.24 1.34-.2 1.97 0 .3.1.52.34.76.55.23.2.64.67.64.67l.04 3.47V37.5l8.84.1 8.85.11.5.59c.77.89.72 2.47-.1 3.3l-.62.6H1.3z'/></svg>`)
 
 mixin nav-list(topics)
   ul.nav-list: each topic in topics
@@ -21,300 +29,327 @@ mixin li-npmlink(pkgname, description)
 
 
 .container
-  nav#navbar
-    .nav-container
-      input#hamburger-toggle(type="checkbox" autocomplete="off")
+  .nav-pane
+    nav#navbar
+      input#burger-toggle(type="checkbox" autocomplete="off")
       header.nav-header
-        //- .nav-header-left
-        h1#title LocalPen Documentation
-        //- .nav-header-right
-        label(for="hamburger-toggle").hamburger
-          span.hamburger-bar
-          span.hamburger-bar
-          span.hamburger-bar
-       
+        //- h1#title #[span.logo !{svgLocalPen}] Setup
+        a(href="/"): h1.logo-heading
+          span.logo-heading-logo(role="img" aria-label="LocalPen") !{svgLocalPen}
+          span.logo-heading-text SETUP & CONFIGURATION
+        label(for="burger-toggle").burger
+          span.burger-bar
+          span.burger-bar
+          span.burger-bar
+      
       +nav-list(topics)
 
-  main#main-doc
-    +main-section(`${topics[0]}`)
-      p #[a(href="https://codepen.io/") CodePen.io] is a handy online code editor and learning environment for testing, experimenting, and showcasing work without the need to setup one's own tooling to see results. That said, if you want the convenience of version control as you code, you'll need something that works in your own development environment. 
-      p This guide will show how to setup #[a(href="https://webpack.js.org/") Webpack]'s development server with hot module replacement to develop code locally that can be pasted directly into the code frames in a CodePen pen whenever you're ready. 
-      p Here, we will simulate a pen with this configuration: 
-      ul
-        li Pug
-        li PostCSS
-        li JS + Babel
-        li Autoprefixer 
-        li Bulma via CDN
-
-      p NOTE: This guide assumes you have #[a(href="https://nodejs.org") NodeJS] and #[code npm] installed locally. 
+  .content-pane  
+    main#main-doc
       
+      header
+        //- h1 #[span.logo(role="img" aria-label="LocalPen") !{svgLocalPen}]
+      +main-section(`${topics[0]}`)
+        p #[a(href="https://codepen.io/") CodePen.io] is a handy online code editor and learning environment for testing, experimenting, and showcasing work without the need to setup one's own tooling to see results. That said, if you want the convenience of version control as you code, you'll need something that works in your own development environment. 
+        p This guide will show how to setup #[a(href="https://webpack.js.org/") Webpack]'s development server with hot module replacement to develop code locally that can be pasted directly into the code frames in a CodePen pen whenever you're ready. 
+        p Here, we will simulate a pen with this configuration: 
+        .list-center
+          ul
+            li Pug
+            li PostCSS
+            li JS + Babel
+            li Autoprefixer 
+            li Bulma via CDN
 
-    +main-section(`${topics[1]}`)
-      p Create a project directory with the following structure: 
-      .filetree 
-        ul
-          li.filetree-dir my-local-pen
-            ul
-              li.filetree-file webpack.config.js
-              li.filetree-dir src 
-                ul 
-                  li.filetree-file index.js
-                  li.filetree-file index.pug
-                  li.filetree-file style.css
-                  li.filetree-file script.js
+        p NOTE: This guide assumes you have #[a(href="https://nodejs.org") NodeJS] and #[code npm] installed locally. 
+        
 
-      //- pre: code.language-bash.
-      //-   my-local-pen 
-      //-   ├── webpack.config.js
-      //-   └── src
-      //-       ├── index.js
-      //-       ├── index.pug
-      //-       ├── style.css
-      //-       └── script.js
-      
-      p From within the project root directory, run #[code npm init -y] to create a #[code package.json] file, and add the following #[code start] property to its #[code scripts] section: 
-      pre: code.language-json.
-        {
-          "scripts": {
-            "start": "webpack-dev-server --mode development"
-          },
-        }
+      +main-section(`${topics[1]}`)
+        p Create a project directory with the following structure: 
+        .tree.list-center 
+          ul.list-outer
+            li my-local-pen
+              ul.list-inner
+                li #[span.t-bar webpack.config.js]
+                li #[span.l-bar src]
+                  ul.list-inner
+                    li #[span.t-bar index.js]
+                    li #[span.t-bar index.pug]
+                    li #[span.t-bar style.css]
+                    li #[span.l-bar script.js]
 
-      p This project will use the following NodeJS dependencies: 
-      ul
-        +li-npmlink('webpack', 'Project bundler') 
-        +li-npmlink('webpack-cli', 'Webpack command line utility')
-        +li-npmlink('webpack-dev-server', 'Development server')
-        +li-npmlink('babel-loader', 'Loads ES2015+ code and transpiles to ES5 using Babel')
-        +li-npmlink('@babel/core', 'Babel compiler core')
-        +li-npmlink('@babel/preset-env', 'Babel presets')
-        +li-npmlink('pug', 'HTML template engine')
-        +li-npmlink('pug-loader', 'Loads Pug templates and returns a function')
-        +li-npmlink('mini-html-webpack-plugin', 'Creates HTML files to serve bundles')
-        +li-npmlink('@vxna/mini-html-webpack-template', 'Extends <code>mini-html-webpack-plugin</code> options')
-        +li-npmlink('morphdom', 'Selectively updates DOM node tree')
-        +li-npmlink('style-loader', 'Adds style tags to DOM')
-        +li-npmlink('css-loader', 'Resolves CSS <code>@import</code> rules and <code>url()</code> functions')
-        +li-npmlink('postcss-loader', 'Loads CSS and processes it with PostCSS')
-        +li-npmlink('postcss-use', 'Enables use of PostCSS plugins directly in stylesheets with <code>@use</code>')
-        +li-npmlink('autoprefixer', 'PostCSS plugin to parse CSS and add vendor prefixes')
-        +li-npmlink('postcss-simple-vars', 'PostCSS plugin to enable Sass-like variables in CSS')
-        +li-npmlink('postcss-nested', 'PostCSS plugin to enable Sass-like nested rules in CSS')
-
-      p Install the previous list as dev dependencies with this command: 
-      pre: code.language-bash.
-        npm i -D webpack webpack-cli webpack-dev-server @babel/core @babel/preset-env babel-loader pug pug-loader mini-html-webpack-plugin @vxna/mini-html-webpack-template morphdom style-loader css-loader postcss-loader postcss-use postcss-simple-vars postcss-nested autoprefixer
-
-      p Next, setup an initial webpack configuration with #[code devServer] configured to use hot module replacement:
-      pre: code.language-javascript.
-        // file: webpack.config.js
-
-        module.exports = {
-          devServer: { 
-            port: 3000,
-            hot: true
-          },
-          module: {
-            rules: [
-              // {}, // babel loader rule
-              // {}, // pug loader rule
-              // [], // css loaders rule
-            ]
-          },
-          plugins: [
-            // MiniHtmlWebpackPlugin
-          ]
-        };
-
-    +main-section(`${topics[2]}`)
-      p In order to automatically pre-process files upon #[code import], webpack loaders are configured - in #[code module.rules] of the webpack config file - as an object with at least two properties: #[code test] and #[code use]. The value of #[code test] is a regular expression that selects by filename, and the #[code use] value specifies one or more loaders and options.  
-      p Configure the #[code babel-loader] to accept #[code .js] files outside of any #[code node_modules] directory using the #[code @babel/preset-env] preset with #[code { modules: false }] option to prevent Babel from transforming ES2015+ module syntax to CommonJS.
-      pre: code.language-javascript.
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: "babel-loader",
-            options: {
-              presets: [
-                [
-                  '@babel/preset-env', 
-                  { modules: false }
-                ]
-              ],
-            }
-          }
-        }
-
-    +main-section(`${topics[3]}`)
-      p The configuration for this rule and accompanying plugin will require three dependencies, so #[code require()] these at the top of #[code webpack.config.js]: 
-      pre: code.language-javascript.
-        const path = require('path');
-        const MiniHtmlWebpackPlugin = require('mini-html-webpack-plugin');
-        const miniHtmlWebpackPluginTemplate = require('@vxna/mini-html-webpack-template');
-
-      p Now, configure this rule to use #[code pug-loader] for #[code .pug] files, using #[code path] to include  only those found in the #[code src/] directory:
-      pre: code.language-javascript.
-        {
-          test: /\.pug$/,
-          include: path.resolve(__dirname, 'src'),
-          use: ['pug-loader']
-        }
-
-      p Next, in the #[code module.exports.plugins] array, create a new instance of #[code MiniHtmlWebpackPlugin] with the #[code miniHtmlWebpackPluginTemplate] to extend the options in #[code context]. If #[code container] is present, its value will be used as the #[code id] to create a container #[code #{'<div>'}] as the first child element under #[code #{'<body>'}]. This is important for this setup, because we will target that element when injecting content from the Pug template. The #[code head] and #[code body] options can be used for #[code links] and #[code scripts]; and, here we will include the CDN versions of #[a(href="https://bulma.io/") Bulma] and #[a(href="https://fontawesome.com/") FontAwesome]. Normally, it would be better to use these as #[code npm] packages for more flexibility and customization, but here we're matching the limitations of a CodePen pen.   
-      pre: code.language-javascript.
-        plugins: [
-          new MiniHtmlWebpackPlugin({
-            context: {
-              lang: 'en',
-              title: 'My LocalPen',
-              container: 'root',
-              head: {
-                links: [
-                  { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" }
-                ],
-                scripts: [
-                  { defer: true, src: "https://use.fontawesome.com/releases/v5.3.1/js/all.js" }
-                ]
-              },
-              body: {
-                scripts: []
-              },
-              trimWhitespace: true
-            },
-            template: miniHtmlWebpackPluginTemplate
-          })
-        ]
-
-    +main-section(`${topics[4]}`)
-      p To configure this rule, we need to #[code require()] two more dependencies, and we'll store an array of CodePen's available PostCSS plugins at the top of #[code webpack.config.js]: 
-      pre: code.language-javascript.
-        const postCssUse = require('postcss-use');
-        const autoprefixer = require('autoprefixer');
-        const codePenPostCssPlugins = [
-          'lost',
-          'postcss-apply',
-          'postcss-color-function',
-          'postcss-conditionals',
-          'postcss-custom-media',
-          'postcss-discard-comments',
-          'postcss-each',
-          'postcss-extend',
-          'postcss-flexbox',
-          'postcss-for',
-          'postcss-media-minmax',
-          'postcss-mixins',
-          'postcss-nested',
-          'postcss-nested-ancestors',
-          'postcss-preset-env',
-          'postcss-reverse-media',
-          'postcss-simple-vars',
-          'postcss-triangle'
-        ];
-
-      p Now we will configure Webpack to process CSS and write auto-prefixed rules into #[code #{'<style>'}] tags in the HTML output. As in the previous loader rules, set the #[code test] value to select #[code .css] files. Unlike the others, this one uses #[em three] loaders to process code in succesion, #[strong #[em in reverse order]], to output the final CSS code. 
-      pre: code.language-javascript.
-        {
-          test: /\.css$/,
-          use: [
-            'style-loader', 
-            { 
-              loader: 'css-loader', 
-              options: { importLoaders: 1 } 
-            }, 
+        p From within the project root directory, run #[code npm init -y] to create a #[code package.json] file, and add the following #[code "start"] property to its #[code "scripts"] section: 
+        .pre-wrapper
+          header JSON
+          pre: code.language-json.
             {
-              loader: 'postcss-loader',
-              options: {
-                plugins: () => [
-                  postCssUse({ modules: codePenPostCssPlugins }),
-                  autoprefixer()
+              "scripts": {
+                "start": "webpack-dev-server --mode development"
+              },
+            }
+
+        p This project will use the following NodeJS dependencies: 
+        ul
+          +li-npmlink('webpack', 'Project bundler') 
+          +li-npmlink('webpack-cli', 'Webpack command line utility')
+          +li-npmlink('webpack-dev-server', 'Development server')
+          +li-npmlink('babel-loader', 'Loads ES2015+ code and transpiles to ES5 using Babel')
+          +li-npmlink('@babel/core', 'Babel compiler core')
+          +li-npmlink('@babel/preset-env', 'Babel presets')
+          +li-npmlink('pug', 'HTML template engine')
+          +li-npmlink('pug-loader', 'Loads Pug templates and returns a function')
+          +li-npmlink('mini-html-webpack-plugin', 'Creates HTML files to serve bundles')
+          +li-npmlink('@vxna/mini-html-webpack-template', `Extends <code>'mini-html-webpack-plugin'</code> options`)
+          +li-npmlink('morphdom', 'Selectively updates DOM node tree')
+          +li-npmlink('style-loader', 'Adds style tags to DOM')
+          +li-npmlink('css-loader', 'Resolves CSS <code>@import</code> rules and <code>url()</code> functions')
+          +li-npmlink('postcss-loader', 'Loads CSS and processes it with PostCSS')
+          +li-npmlink('postcss-use', 'Enables use of PostCSS plugins directly in stylesheets with <code>@use</code>')
+          +li-npmlink('autoprefixer', 'PostCSS plugin to parse CSS and add vendor prefixes')
+          +li-npmlink('postcss-simple-vars', 'PostCSS plugin to enable Sass-like variables in CSS')
+          +li-npmlink('postcss-preset-env', 'PostCSS plugin to enable modern CSS features')
+
+        p Install the previous list as dev dependencies with this command: 
+        .pre-wrapper
+          header CLI
+          pre: code.language-bash.
+            npm i -D webpack webpack-cli webpack-dev-server @babel/core @babel/preset-env babel-loader pug pug-loader mini-html-webpack-plugin @vxna/mini-html-webpack-template morphdom style-loader css-loader postcss-loader postcss-use postcss-simple-vars postcss-preset-env autoprefixer
+
+        p Next, setup an initial webpack configuration with #[code devServer] configured to use hot module replacement:
+        .pre-wrapper
+          header JS
+          pre: code.language-javascript.
+            // file: webpack.config.js
+
+            module.exports = {
+              devServer: { 
+                port: 3000,
+                hot: true
+              },
+              module: {
+                rules: [
+                  // {}, // babel loader rule
+                  // {}, // pug loader rule
+                  // [], // css loaders rule
                 ]
+              },
+              plugins: [
+                // MiniHtmlWebpackPlugin
+              ]
+            };
+
+      +main-section(`${topics[2]}`)
+        p In order to automatically pre-process files upon #[code import], webpack loaders are configured - in #[code module.rules] of the webpack config file - as an object with at least two properties: #[code test] and #[code use]. The value of #[code test] is a regular expression that selects by filename, and the #[code use] value specifies one or more loaders and options.  
+        p Configure the #[code babel-loader] to accept #[code .js] files outside of any #[code node_modules] directory using the #[code @babel/preset-env] preset with #[code { modules: false }] option to prevent Babel from transforming ES2015+ module syntax to CommonJS.
+        .pre-wrapper
+          header JS
+          pre: code.language-javascript.
+            {
+              test: /\.js$/,
+              exclude: /node_modules/,
+              use: {
+                loader: "babel-loader",
+                options: {
+                  presets: [
+                    [
+                      '@babel/preset-env', 
+                      { modules: false }
+                    ]
+                  ],
+                }
               }
             }
-          ]
-        }
-      
-      p While #[code style-loader] does have configuration options, setting it here as a string will use its default settings. Next, #[code css-loader] must be made aware of loaders before it, so we set its #[code importLoaders] option accordingly. Lastly, the #[code plugins] option of #[code postcss-loader] is a function that loads #[code postCssUse] with its list of allowable #[code codePenPostCssPlugins] and #[code autoprefixer] with its default settings.
-      
-    +main-section(`${topics[5]}`) 
-      P The files #[code index.pug], #[code style.css], and #[code script.js] in #[code /src] will contain the code for CodePen's respective HTML, CSS, and JS code editor panels. As we have configured this project, you should be able to paste code from these files directly into Codepen without modification. Below is some basic sample code to test our configuration. 
 
-      p #[strong index.pug] makes use of Bulma classes and a FontAwesome icon to test the CDN links configured in #[code MiniHtmlWebpackPlugin], and includes a button to test that the #[code script.js] file is properly bundled. 
-      pre: code.language-pug.
-        //- file: src/index.pug
-        section.hero.is-fullheight.is-dark
-          .hero-body
-            .container.has-text-centered
-              h1.title.is-size-2 L\#[i.fab.fa-codepen]CALPEN
-              button.button.is-info Check script.js
+      +main-section(`${topics[3]}`)
+        p The configuration for this rule and accompanying plugin will require three dependencies, so #[code require()] these at the top of #[code webpack.config.js]: 
+        .pre-wrapper
+          header JS
+          pre: code.language-javascript.
+            const path = require('path');
+            const MiniHtmlWebpackPlugin = require('mini-html-webpack-plugin');
+            const miniHtmlWebpackPluginTemplate = require('@vxna/mini-html-webpack-template');
+
+        p Now, configure this rule to use #[code pug-loader] for #[code .pug] files, using #[code path] to include  only those found in the #[code src/] directory:
+        .pre-wrapper
+          header JS
+          pre: code.language-javascript.
+            {
+              test: /\.pug$/,
+              include: path.resolve(__dirname, 'src'),
+              use: ['pug-loader']
+            }
+
+        p Next, in the #[code module.exports.plugins] array, create a new instance of #[code MiniHtmlWebpackPlugin] with the #[code miniHtmlWebpackPluginTemplate] to extend the options in #[code context]. If #[code container] is present, its value will be used as the #[code id] to create a container #[code #{'<div>'}] as the first child element under #[code #{'<body>'}]. This is important for this setup, because we will target that element when injecting content from the Pug template. The #[code head] and #[code body] options can be used for #[code links] and #[code scripts]; and, here we will include the CDN versions of #[a(href="https://bulma.io/") Bulma] and #[a(href="https://fontawesome.com/") FontAwesome]. Normally, it would be better to use these as #[code npm] packages for more flexibility and customization, but here we're matching the limitations of a CodePen pen.  
+        .pre-wrapper
+          header JS 
+          pre: code.language-javascript.
+            plugins: [
+              new MiniHtmlWebpackPlugin({
+                context: {
+                  lang: 'en',
+                  title: 'My LocalPen',
+                  container: 'root',
+                  head: {
+                    links: [
+                      { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" }
+                    ],
+                    scripts: [
+                      { defer: true, src: "https://use.fontawesome.com/releases/v5.3.1/js/all.js" }
+                    ]
+                  },
+                  body: {
+                    scripts: []
+                  },
+                  trimWhitespace: true
+                },
+                template: miniHtmlWebpackPluginTemplate
+              })
+            ]
+
+      +main-section(`${topics[4]}`)
+        p To configure this rule, we need to #[code require('postcss-use')], and we'll store an array of CodePen's available PostCSS plugins at the top of #[code webpack.config.js]: 
+        .pre-wrapper
+          header JS
+          pre: code.language-javascript.
+            const postCssUse = require('postcss-use');
+            const codePenPostCssPlugins = [
+              'lost',
+              'postcss-apply',
+              'postcss-color-function',
+              'postcss-conditionals',
+              'postcss-custom-media',
+              'postcss-discard-comments',
+              'postcss-each',
+              'postcss-extend',
+              'postcss-flexbox',
+              'postcss-for',
+              'postcss-media-minmax',
+              'postcss-mixins',
+              'postcss-nested',
+              'postcss-nested-ancestors',
+              'postcss-preset-env',
+              'postcss-reverse-media',
+              'postcss-simple-vars',
+              'postcss-triangle'
+            ];
+
+        p Now we will configure Webpack to process CSS and write auto-prefixed rules into #[code #{'<style>'}] tags in the HTML output. As in the previous loader rules, set the #[code test] value to select #[code .css] files. Unlike the others, this one uses #[em three] loaders to process code in succesion, #[strong #[em in reverse order]], to output the final CSS code.
+        .pre-wrapper
+          header JS 
+          pre: code.language-javascript.
+            {
+              test: /\.css$/,
+              use: [
+                'style-loader', 
+                { 
+                  loader: 'css-loader', 
+                  options: { importLoaders: 1 } 
+                }, 
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    plugins: () => [
+                      postCssUse({ modules: codePenPostCssPlugins })
+                    ]
+                  }
+                }
+              ]
+            }
+        
+        p While #[code style-loader] does have configuration options, setting it here as a string will use its default settings. Next, #[code css-loader] must be made aware of loaders before it, so we set its #[code importLoaders] option accordingly. Lastly, the #[code plugins] option of #[code postcss-loader] is a function that loads #[code postCssUse] with its list of allowable #[code codePenPostCssPlugins].
+        
+      +main-section(`${topics[5]}`) 
+        P The files #[code index.pug], #[code style.css], and #[code script.js] in #[code /src] will contain the code for CodePen's respective HTML, CSS, and JS code editor panels. As we have configured this project, you should be able to paste code from these files directly into Codepen without modification. Below is some basic sample code to test our configuration. 
+
+        p #[code index.pug] makes use of Bulma classes and a FontAwesome icon to test the CDN links configured in #[code MiniHtmlWebpackPlugin], and includes a button to test that the #[code script.js] file is properly bundled. 
+        .pre-wrapper
+          header PUG
+          pre: code.language-pug.
+            //- file: src/index.pug
+            section.hero.is-fullheight.is-dark
+              .hero-body
+                .container.has-text-centered
+                  h1.title.is-size-2 L\#[i.fab.fa-codepen]CALPEN
+                  button.button.is-info Check script.js
+
+          
+        p #[code style.css] enables the #[code postcss-simple-vars] and #[code postcss-preset-env] PostCSS plugins directly in the stylesheet with #[code @use], and makes use of those features below. When using multiple plugins this way, it's important to check their documentation to see if the combination you want to use will work well together. In this case, #[code postcss-simple-vars] must be loaded #[em before] #[code postcss-preset-env], which we'll use with the #[code stage: 0] option to enable all of its available features. One of those is SCSS-like nested selectors, which we'll use below. Also, this plugin includes #[code autoprefixer] enabled by default. You can customize the prefixing behavior by adding a #[code browsers] option here (or, better - a #[code "browserslist"] entry in #[code package.json] that can also be used by Babel); but, here we'll use its defaults for simplicity. 
+        p #[em NOTE: The #[code postcss-preset-env] is incredibly versatile, and we're just barely scratching the surface of what it can do. Be sure and check out it's #[a(href="https://github.com/csstools/postcss-preset-env#options") options] and #[a(href="https://preset-env.cssdb.org/features") many features]. Also, remember: if you want to use any more of the #[code codePenPostCssPlugins], you'll need to install them with #[code npm] first.]
+        .pre-wrapper
+          header CSS
+          pre: code.language-scss.
+            /* file: src/style.css */
+            @use postcss-simple-vars;
+            @use postcss-preset-env(stage: 0);
+
+            $title-letter-spacing: .15em;
+
+            section.hero > .hero-body > .container {
+              & h1.title {
+                font-weight: normal;
+                letter-spacing: $title-letter-spacing;
+                margin-right: calc($title-letter-spacing * -1);
+                & svg {
+                  margin-right: .2em;
+                }
+              }
+            }
+
+
+        p #[code script.js] simply adds an event listener to the button in #[code index.pug] that triggers an #[code alert()] on click.
+        .pre-wrapper
+          header JS
+          pre: code.language-javascript.
+            // file: src/script.js
+            document.addEventListener(
+              'DOMContentLoaded', 
+              () => document
+                .querySelector('button')
+                .addEventListener("click", btnClickHandler)
+            );
+
+            function btnClickHandler() {
+              return alert('It works!');
+            }
+
+      +main-section(`${topics[6]}`)
+        p In order for Webpack to begin the bundling process, it needs an entry point. By default, it looks for #[code src/index.js], which is what we will use. First, we #[code import] the files to be processed by the previously configured loaders, as well as any needed dependencies. Notice that, instead of importing #[code index.pug] directly (like #[code style.css] and #[code script.js]), we import the function created by #[code pug-loader] into #[code pugToHtmlStr] so that we can customize how the compiled HTML is injected into the page. Here, we can facilitate HTML hot reloading with an #[a(href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE") IIFE] that: 
+        ol
+          li Creates a #[code root] element object for the #[code #{'<div id="root">'}] in DOM. 
+          li Creates a #[code newRoot] document fragment containing the compiled HTML returned from #[code pugToHtmlStr()] as children. 
+          li Uses #[code morphdom()] to compare children of #[code root] to those of #[code newRoot], updating only changed elements in DOM while keeping any stateful properties.
+        p Finally, if HMR is active, we use #[code module.hot.accept()] to accept updates for this module or any of its dependencies, logging any errors to the console.
+        .pre-wrapper
+          header JS
+          pre: code.language-javascript.
+            // file: src/index.js
+            import morphdom from 'morphdom';
+            import { default as pugToHtmlStr } from './index.pug';
+            import './style.css';
+            import './script.js';
+
+            (() => {
+              let root = document.getElementById('root'); 
+              let newRoot = document.createRange().createContextualFragment(
+                `<div id="root">${pugToHtmlStr()}</div>`
+              );
+              return morphdom(root, newRoot, {
+                onBeforeElUpdated: (fromEl, toEl) => (
+                  fromEl.isEqualNode(toEl) ? false : true
+                ),
+                childrenOnly: true
+              });
+            })();
+
+            if (module.hot) {
+              module.hot.accept(err => console.log(err));
+            }
+
+      +main-section(`${topics[7]}`)
+        p Now you can run the app with #[code npm start] to see how it works! You can also run #[code git init] in your project directory to add the convenience of version control. 
+        p When you're ready to transfer your work to CodePen, you will still have to configure pen settings as usual with any external resources (e.g. Bulma and FontAwesome used here) and/or preprocessors (e.g. Babel, Pug, and PostCSS used here). But, once your pen is configured to match your project, you can copy and paste the contents of #[code src/index.pug], #[code src/style.css], and #[code src/script.js] directly into their respective HTML, CSS, and JS code editor frames to showcase your creation to the world!  
 
         
-      p #[strong style.css] enables the #[code postcss-simple-vars] and #[code postcss-nested] PostCSS plugins directly in the stylesheet with #[code @use], and makes use of those features below. #[em NOTE: if you want to use more of the plugins from #[code codePenPostCssPlugins] in this project, you'll need to install them with #[code npm] first.]
-      pre: code.language-scss.
-        /* file: src/style.css */
-        @use postcss-simple-vars;
-        @use postcss-nested;
 
-        $title-letter-spacing: .15em;
-
-        section.hero > .hero-body > .container {
-          h1.title {
-            font-weight: normal;
-            letter-spacing: $title-letter-spacing;
-            margin-right: calc($title-letter-spacing * -1);
-            svg {
-              margin-right: .2em;
-            }
-          }
-        }
-
-
-      p #[strong script.js] simply adds an event listener to the button in #[code index.pug] that triggers an #[code alert()] on click.
-      pre: code.language-javascript.
-        // file: src/script.js
-        document.addEventListener(
-          'DOMContentLoaded', 
-          () => document
-            .querySelector('button')
-            .addEventListener("click", btnClickHandler)
-        );
-
-        function btnClickHandler() {
-          return alert('It works!');
-        }
-
-    +main-section(`${topics[6]}`)
-      p In order for Webpack to begin the bundling process, it needs an entry point. By default, it looks for #[code src/index.js], which is what we will use. First, we #[code import] the files to be processed by the previously configured loaders, as well as any needed dependencies. Notice that, instead of importing #[code index.pug] directly (like #[code style.css] and #[code script.js]), we import the function created by #[code pug-loader] into #[code pugToHtmlStr] so that we can customize how the compiled HTML is injected into the page. Here, we can facilitate HTML hot reloading with an #[a(href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE") IIFE] that: 
-      ol
-        li Creates a #[code root] element object for the #[code #{'<div id="root">'}] in DOM. 
-        li Creates a virtual #[code #{'<div id="root">'}] as a document fragment in #[code newRoot] containing the compiled HTML returned from #[code pugToHtmlStr()]. 
-        li Uses #[code morphdom()] to compare children of #[code root] to those of #[code newRoot], updating only changed elements in DOM while keeping any stateful properties.
-      p Finally, if HMR is active, we use #[code module.hot.accept()] to accept updates for this module or any of its dependencies, logging any errors to the console.
-      pre: code.language-javascript.
-        // file: src/index.js
-        import morphdom from 'morphdom';
-        import { default as pugToHtmlStr } from './index.pug';
-        import './style.css';
-        import './script.js';
-
-        (() => {
-          let root = document.getElementById('root'); 
-          let newRoot = document.createRange().createContextualFragment(
-            `<div id="root">${pugToHtmlStr()}</div>`
-          );
-          return morphdom(root, newRoot, {
-            onBeforeElUpdated: (fromEl, toEl) => (
-              fromEl.isEqualNode(toEl) ? false : true
-            ),
-            childrenOnly: true
-          });
-        })();
-
-        if (module.hot) {
-          module.hot.accept(err => console.log(err));
-        }
-
-    +main-section(`${topics[7]}`)
-      p Now you can run the app with #[code npm start]!
+button#custom_fcc_foldout_toggler !{svgPwrSymbol} #[span.btntext TEST]
 
