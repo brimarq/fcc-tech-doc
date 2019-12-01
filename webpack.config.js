@@ -66,8 +66,7 @@ module.exports = {
         head: {
           links: [
             { rel: "stylesheet", href: "https://unpkg.com/normalize.css@8.0.1/normalize.css"},
-            { rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Lato|Montserrat:800&display=swap" },
-            { rel: "stylesheet", href: "https://unpkg.com/prism-themes@1.3.0/themes/prism-material-dark.css" }
+            { rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Lato|Montserrat:800|Fira+Code&display=swap" }
           ],
           scripts: []
         },

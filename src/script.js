@@ -2,15 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const burgerToggle = document.querySelector("input#burger-toggle");
   const navLinks = document.querySelectorAll("a.nav-link");
   
-  // Close mobile dropdown menu on orientation change
+  // Close mobile dropdown menu on orientation change or click on nav-link
   window.addEventListener("orientationchange", () => burgerToggle.checked = false);
-  navLinks.forEach(link => link.addEventListener("click", linkClickHandler));
+  navLinks.forEach(link => link.addEventListener("click", () => burgerToggle.checked = false));
 
   useCustomFccToggler();
 
-
-  
-
+  // Replace original fCC test suite toggler with one that doesn't clash with page elements
   async function useCustomFccToggler() {
     const fccTestSuite = document.querySelector("#fcc_test_suite_wrapper");
     const newToggler = document.querySelector("#custom_fcc_foldout_toggler");
@@ -62,12 +60,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
   }
-
-  function linkClickHandler(e) {
-    burgerToggle.checked = false;
-    console.log(e.target);
-    navLinks.forEach(link => link.classList.remove("is-active"));
-    this.classList.add("is-active");
-  };
 
 });
