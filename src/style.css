@@ -446,22 +446,12 @@ nav#navbar > .nav-container {
     }
   }
 
+  /* Prevent targets from being hidden by navbar */
   &:target {
-    /* Prevent targets from being hidden by navbar */
-    &::before { 
-      display: block; 
-      content: " "; 
-      margin-top: -50px; 
-      height: 50px; 
-      visibility: hidden; 
-      pointer-events: none;
-    }
+    scroll-margin-top: 60px;
 
     @media $breakpoint {
-      &::before { 
-        margin-top: 0; 
-        height: 0; 
-      }
+      scroll-margin-top: 10px;
     }
   }
 }
